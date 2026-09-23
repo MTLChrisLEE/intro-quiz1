@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz de Révision - 90 Questions</title>
+    <style>
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; 
+            background-color: #f4f6f9; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            min-height: 100vh; 
+            margin: 0; 
+            padding: 20px;
+        }
+        .quiz-container { 
+            background: white; 
+            padding: 2.5rem; 
+            border-radius: 12px; 
+            box-shadow: 0 8px 24px rgba(0,0,0,0.1); 
+            width: 100%; 
+            max-width: 700px; 
+        }
+        h1 { 
+            font-size: 1.5rem; 
+            color: #003366; 
+            text-align: center; 
+            margin-top: 0;
+            margin-bottom: 0.5rem;
+        }
+        .progress-container {
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        progress {
+            width: 100%;
+            height: 10px;
+            border-radius: 5px;
+            margin-top: 8px;
+        }
+        progress::-webkit-progress-bar {
+            background-color: #e5e7eb;
+            border-radius: 5px;
+        }
+        progress::-webkit-progress-value {
+            background-color: #003366;
+            border-radius: 5px;
+        }
+        .progress-text {
+            font-size: 0.9rem;
+            color: #6b7280;
+            font-weight: 500;
+        }
+        .question { 
+            font-size: 1.2rem; 
+            margin-bottom: 1.5rem; 
+            font-weight: 600; 
+            color: #1f2937;
+            line-height: 1.4;
+        }
+        .options { 
+            display: flex; 
+            flex-direction: column; 
+            gap: 12px; 
+        }
+        button { 
+            padding: 14px 20px; 
+            border: 2px solid #e5e7eb; 
+            border-radius: 8px; 
+            background: #ffffff; 
+            cursor: pointer; 
+            transition: all 0.2s ease; 
+            font-size: 1.05rem; 
+            text-align: left;
+            color: #374151;
+            font-weight: 500;
+        }
+        button:hover:not(:disabled) { 
+            background: #f9fafb; 
+            border-color: #d1d5db;
+        }
+        button:disabled {
+            cursor: default;
+        }
+        button.correct { 
+            background: #ecfdf5; 
+            border-color: #10b981; 
+            color: #065f46;
+        }
+        button.wrong { 
+            background: #fef2f2; 
+            border-color: #ef4444; 
+            color: #991b1b;
+        }
+        .hidden { 
+            display: none; 
+        }
+        #next-btn, #restart-btn { 
+            margin-top: 24px; 
+            background: #003366; 
+            color: white; 
+            border: none; 
+            padding: 14px 20px; 
+            border-radius: 8px; 
+            cursor: pointer; 
+            width: 100%;
+            font-size: 1.1rem;
+            font-weight: bold;
+            transition: background 0.2s;
+        }
+        #next-btn:hover, #restart-btn:hover { 
+            background: #002244; 
+        }
+        #next-btn {
+            display: none;
+        }
+        .results { 
+            text-align: center; 
+        }
+        .score-display {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #003366;
+            margin: 1rem 0;
+        }
+        .feedback {
+            margin-top: 15px;
+            font-size: 1.1rem;
+            color: #4b5563;
+        }
+    </style>
+</head>
+<body>
+    <div class="quiz-container">
+        <h1>Révision : Introduction à l'aéronautique</h1>
+        
+        <div id="quiz">
+            <div class="progress-container">
+                <div class="progress-text" id="progress-text">Question 1 sur 90</div>
+                <progress id="progress-bar" value="1" max="90"></progress>
+            </div>
+            <div class="question" id="question">Chargement...</div>
+            <div class="options" id="options"></div>
+            <button id="next-btn">Question Suivante</button>
+        </div>
+
+        <div class="results hidden" id="results">
+            <h2>Résultats de la révision</h2>
+            <div class="score-display"><span id="score">0</span> / 90</div>
+            <div class="feedback" id="feedback-text"></div>
+            <button id="restart-btn" onclick="location.reload()">Recommencer le quiz</button>
+        </div>
+    </div>
+
+    <script>
+        const quizData = [
+            { q: "Quel axe de l'aéronef est associé au mouvement de lacet ?", o: ["L'axe vertical", "L'axe longitudinal", "L'axe latéral", "L'axe de roulis"], a: 0 },
+            { q: "Quelle caractéristique distingue principalement la structure de fuselage semi-monocoque de la structure en treillis ?", o: ["Elle utilise exclusivement du bois", "Elle ne possède pas de longerons", "Elle possède un revêtement travaillant", "Elle a une forme parfaitement sphérique"], a: 2 },
+            { q: "Dans une structure semi-monocoque, quel est le rôle principal des longerons ?", o: ["Reprendre les charges concentrées", "Maintenir la forme de la section", "Reprendre la flexion générale du fuselage", "Stabiliser le revêtement"], a: 2 },
+            { q: "Quel type de charge subit l'extrados de la voilure lors d'un vol en palier ?", o: ["Une torsion", "Un cisaillement", "Un étirement", "Une compression"], a: 3 },
+            { q: "Parmi les configurations de voilure, laquelle offre une stabilité naturelle en roulis et un bon dégagement au sol, mais nécessite une structure interne du fuselage plus complexe ?", o: ["La voilure haute", "La voilure basse", "La voilure médiane", "L'aile volante"], a: 0 },
+            { q: "Quel est l'effet d'un angle de dièdre positif sur un aéronef ?", o: ["Il améliore la stabilité latérale", "Il augmente la maniabilité en roulis", "Il retarde le Mach critique", "Il diminue la traînée"], a: 0 },
+            { q: "Quelle forme d'aile est réputée pour offrir une traînée minimale en vol subsonique mais présente un décrochage brutal ?", o: ["L'aile trapézoïdale", "L'aile en flèche", "L'aile elliptique", "L'aile delta"], a: 2 },
+            { q: "Quel type d'empennage facilite le chargement arrière pour les avions cargos, mais s'accompagne d'un poids et d'une traînée accrus ?", o: ["L'empennage en T", "L'empennage bipoutre", "L'empennage classique", "L'empennage en V"], a: 1 },
+            { q: "Selon les données présentées, combien d'emplois directs la grappe aérospatiale québécoise génère-t-elle en 2024 ?", o: ["25 000", "65 000", "43 100", "195 000"], a: 2 },
+            { q: "Dans quel type d'organisation de la grappe aérospatiale se classent des entreprises comme Héroux-Devtek et CMC Electronics ?", o: ["Donneurs d'ordres", "Équipementiers / manufacturiers", "Maintenance (MRO)", "Recherche et innovation"], a: 1 },
+            { q: "L'un des enjeux majeurs actuels de la grappe aérospatiale est la décarbonation. Quelle solution spécifique est mentionnée dans le cours ?", o: ["L'électrification totale", "Les carburants durables (SAF)", "L'hydrogène liquide", "Les panneaux solaires"], a: 1 },
+            { q: "Selon le Code de conduite du TEA, que doit faire un technicien s'il subit une pression indue pour accélérer son travail ?", o: ["Déléguer la tâche", "Accélérer en omettant certaines étapes", "Refuser la pression qui compromet la sécurité", "Signer sans vérifier"], a: 2 },
+            { q: "Dans le modèle SHELL, quelle composante représente la documentation, les procédures et les manuels ?", o: ["Le Hardware (H)", "Le Liveware (L)", "L'Environment (E)", "Le Software (S)"], a: 3 },
+            { q: "Dans le modèle SHELL, l'interaction 'Liveware-Liveware' fait référence à quoi ?", o: ["L'ergonomie du poste de travail", "La communication au sein de l'équipe et la supervision", "La gestion du bruit ambiant", "La lecture des manuels"], a: 1 },
+            { q: "Parmi les 12 facteurs humains (Dirty Dozen), lequel s'installe particulièrement lors de l'exécution de tâches très routinières ?", o: ["La fatigue", "Le stress", "La complaisance", "La pression"], a: 2 },
+            { q: "Quel est le principe fondamental de la 'culture juste' en aéronautique face à une erreur involontaire ?", o: ["Elle doit être signalée et analysée pour améliorer le système", "Elle entraîne un congédiement immédiat", "Elle est gardée secrète pour protéger l'employé", "Elle est punie par une amende"], a: 0 },
+            { q: "Comment calcule-t-on le 'risque' dans le domaine de la sécurité aérospatiale ?", o: ["Risque = Gravité / Probabilité", "Risque = Danger x Temps d'exposition", "Risque = Probabilité x Gravité", "Risque = Fatigue x Pression"], a: 2 },
+            { q: "Sur l'aire de trafic, la présence de 'wingwalkers' est une mesure d'atténuation principalement pour quel danger ?", o: ["L'incendie de carburant", "Le mouvement au sol et les rayons de virage", "L'ingestion de débris (FOD)", "Le bruit extrême"], a: 1 },
+            { q: "La présence d'un rotor de queue invisible lors de sa rotation est un danger caractéristique de quel environnement de travail ?", o: ["Le hangar de maintenance", "L'aire de trafic", "L'intérieur de la cabine", "Le simulateur de vol"], a: 1 },
+            { q: "Quel agent extincteur est formellement déconseillé pour éteindre un feu de Classe B (liquides inflammables) ?", o: ["La mousse", "Le CO2", "L'eau", "La poudre chimique"], a: 2 },
+            { q: "Dans l'acronyme P.A.S.S. utilisé pour l'utilisation des extincteurs, que signifie le premier 'P' ?", o: ["Pointer (Pointer la buse)", "Pull (Dégoupiller la tige)", "Push (Pousser le levier)", "Press (Pressuriser l'agent)"], a: 1 },
+            { q: "Un feu impliquant des graisses de cuisson dans une cuisine d'aéroport est classé de quel type ?", o: ["Classe A", "Classe B", "Classe C", "Classe K"], a: 3 },
+            { q: "Quel matériau a historiquement été privilégié pour le revêtement non porteur des structures en treillis ?", o: ["Le tissu léger", "L'aluminium", "Le titane", "La fibre de carbone"], a: 0 },
+            { q: "En voilure, qu'appelle-t-on la ligne droite imaginaire reliant le bord d'attaque au bord de fuite ?", o: ["L'envergure", "La ligne de courbure moyenne", "La corde", "L'axe de lacet"], a: 2 },
+            { q: "Une voilure avec une géométrie variable modifie principalement quelle caractéristique en vol ?", o: ["Le dièdre", "L'angle de flèche", "L'épaisseur du profil", "La surface de l'empennage"], a: 1 },
+            { q: "Quelle combinaison empennage/voilure est souvent utilisée pour les avions volant à très haute vitesse (supersonique) comme de nombreux chasseurs ?", o: ["Aile droite et empennage classique", "Aile delta (souvent avec canards)", "Aile elliptique et empennage en T", "Aile volante pure"], a: 1 },
+            { q: "L'organisme Aéro Montréal remplit principalement quelle fonction au sein de la grappe industrielle ?", o: ["La réglementation", "La formation de base", "La concertation et la coordination", "La maintenance (MRO)"], a: 2 },
+            { q: "L'école nationale d'aérotechnique (ÉNA) appartient à quelle catégorie d'organisations dans la grappe ?", o: ["Donneurs d'ordres", "Équipementiers", "Réglementation", "Formation de la main-d'œuvre"], a: 3 },
+            { q: "Parmi les 12 facteurs humains, quel terme décrit un comportement guidé par la phrase « on a toujours fait comme ça ici » ?", o: ["Le manque d'affirmation de soi", "Les normes (du groupe)", "La distraction", "Le manque de connaissances"], a: 1 },
+            { q: "Selon la culture juste, si un technicien omet de documenter son travail par négligence pure et simple ou malice, quelle devrait être la réaction ?", o: ["Appliquer des mesures disciplinaires", "Ignorer l'incident", "Récompenser l'honnêteté", "Modifier le manuel de maintenance"], a: 0 },
+            { q: "Quelle étape de la méthode P.A.S.S. s'assure que l'agent extincteur couvre efficacement toute la surface du foyer d'incendie ?", o: ["Pull", "Aim", "Squeeze", "Sweep (Balayer)"], a: 3 },
+            { q: "En aérodynamique subsonique (en dessous de Mach 0,7), quel angle de flèche est généralement adopté ?", o: ["Une flèche nulle ou très faible (droite)", "Entre 25° et 35°", "Entre 35° et 45°", "Une flèche inversée"], a: 0 },
+            { q: "Pour une aile en vol, que subissent les composants structuraux de l'intrados ?", o: ["Une compression", "Une torsion transversale", "Un étirement", "Aucune force"], a: 2 },
+            { q: "Le bord le plus fin d'un profil d'aile par lequel le flux d'air quitte la surface se nomme :", o: ["Le bord d'attaque", "Le bord de fuite", "Le longeron arrière", "La nervure terminale"], a: 1 },
+            { q: "Au sol, que se passe-t-il avec les charges structurelles de l'aile par rapport au vol ?", o: ["Elles s'annulent", "Elles sont identiques", "Elles s'inversent", "Elles sont décuplées"], a: 2 },
+            { q: "Dans le fuselage semi-monocoque, qu'est-ce qui stabilise le revêtement (skin) pour éviter son flambage local ?", o: ["Les cadres", "Les cloisons", "Les longerons", "Les lisses (stringers)"], a: 3 },
+            { q: "Quel est un désavantage d'une voilure à dièdre positif prononcé ?", o: ["Une réduction de la portance maximale", "Un risque accru de 'dutch roll' (roulis hollandais)", "Une structure beaucoup plus lourde", "Une instabilité en tangage"], a: 1 },
+            { q: "Quel est l'avantage principal d'une aile en flèche négative par rapport à une flèche positive ?", o: ["Elle offre une meilleure maniabilité", "Elle retarde mieux le Mach critique", "Elle est plus facile à construire", "Elle augmente la stabilité en lacet"], a: 0 },
+            { q: "Quel est le chiffre de ventes annuelles de la grappe aérospatiale québécoise mentionné dans la révision ?", o: ["15,5 G$", "22,8 G$", "43,1 G$", "106 G$"], a: 1 },
+            { q: "Parmi les 12 facteurs humains, lequel représente l'urgence perçue ou imposée ?", o: ["Le stress", "La fatigue", "La pression", "La distraction"], a: 2 },
+            { q: "Dans l'anatomie d'un aéronef, à quoi sert principalement le groupe motopropulseur ?", o: ["Générer la portance", "Assurer la stabilité", "Fournir la poussée ou la traction", "Absorber les charges au sol"], a: 2 },
+            { q: "Un technicien remarque une égratignure mineure sur une pièce. Selon le code de conduite du TEA, que doit-il faire ?", o: ["Signaler toute anomalie ou doute technique", "L'ignorer si elle semble superficielle", "Polir la pièce sans le documenter", "Attendre la prochaine inspection"], a: 0 },
+            { q: "En aérodynamique, l'angle de flèche d'une aile a principalement pour but de :", o: ["Réduire le poids de l'aile", "Retarder l'apparition de la compressibilité (Mach critique)", "Améliorer la portance à basse vitesse", "Simplifier le passage du longeron"], a: 1 },
+            { q: "Quel matériau est le plus couramment utilisé dans les structures historiques en treillis ?", o: ["Les matériaux composites", "L'aluminium usiné", "Les tubes d'acier soudés", "Le titane"], a: 2 },
+            { q: "Parmi les catégories suivantes d'extincteurs, laquelle n'existe PAS dans la classification présentée ?", o: ["Classe A", "Classe K", "Classe D", "Classe Z"], a: 3 },
+            { q: "Quel mouvement est contrôlé autour de l'axe longitudinal (nez-queue) de l'aéronef ?", o: ["Le tangage", "Le lacet", "Le roulis", "Le décrochage"], a: 2 },
+            { q: "L'axe latéral d'un aéronef (d'une aile à l'autre) est associé à quel mouvement ?", o: ["Le tangage", "Le roulis", "Le lacet", "La traînée"], a: 0 },
+            { q: "Quelle est la fonction principale du fuselage ?", o: ["Générer la portance", "Loger l'équipage, les passagers et la cargaison", "Fournir la poussée", "Assurer la stabilité directionnelle"], a: 1 },
+            { q: "Quelle partie de l'aéronef est chargée d'absorber les charges au sol ?", o: ["L'empennage", "Le groupe motopropulseur", "Le train d'atterrissage", "Les nervures"], a: 2 },
+            { q: "Quelle est la distinction fondamentale entre la 'structure' et les 'systèmes' d'un aéronef ?", o: ["Les systèmes portent l'aéronef; la structure le fait fonctionner", "La structure porte l'aéronef; les systèmes le font fonctionner", "Ils sont interchangeables", "La structure concerne uniquement l'hydraulique"], a: 1 },
+            { q: "Quel type de fuselage utilise une conception en forme de « coquille d'œuf » avec très peu de renforts internes ?", o: ["Treillis", "Semi-monocoque", "Monocoque", "Aile volante"], a: 2 },
+            { q: "Dans un fuselage semi-monocoque, quel est le rôle des cadres (frames) ?", o: ["Reprendre l'essentiel de la flexion générale", "Maintiennent la forme de la section transversale", "Stabiliser le revêtement", "Absorber le cisaillement"], a: 1 },
+            { q: "Dans un fuselage semi-monocoque, quelle composante reprend les charges concentrées comme la pressurisation ou l'attache du train ?", o: ["Les lisses", "Les longerons", "Les cloisons (bulkheads)", "Le revêtement"], a: 2 },
+            { q: "Quelle est la hiérarchie correcte de transmission des charges en flexion dans un fuselage semi-monocoque ?", o: ["Revêtement -> Lisses -> Longerons", "Longerons -> Cadres -> Cloisons", "Cadres -> Lisses -> Revêtement", "Cloisons -> Revêtement -> Lisses"], a: 0 },
+            { q: "Dans un fuselage semi-monocoque, le revêtement (skin) résiste principalement à quel type d'effort ?", o: ["Compression pure", "Cisaillement et torsion", "Flexion uniquement", "Étirement transversal"], a: 1 },
+            { q: "En aérodynamique, comment appelle-t-on la pointe avant d'un profil d'aile ?", o: ["Le bord de fuite", "L'extrados", "Le bord d'attaque", "La corde"], a: 2 },
+            { q: "Comment décrit-on typiquement la forme de l'extrados d'un profil d'aile standard ?", o: ["Plat", "Concave", "Bombé (surface supérieure)", "Symétrique à l'intrados"], a: 2 },
+            { q: "Quelle structure interne de la voilure donne sa forme aérodynamique au profil et transmet les charges aux longerons ?", o: ["Les lisses", "Les cadres", "Les cloisons", "Les nervures (ribs)"], a: 3 },
+            { q: "Quel est l'inconvénient structural principal d'une voilure médiane ?", o: ["Elle nécessite un train d'atterrissage très long", "Elle traverse le fuselage, créant un encombrement interne", "Elle réduit drastiquement la portance", "Elle est très instable en roulis"], a: 1 },
+            { q: "Quel est l'avantage pratique d'une voilure basse pour la maintenance ?", o: ["Elle élimine le besoin d'un train d'atterrissage", "Elle permet d'utiliser un train plus court et offre une bonne accessibilité", "Elle protège mieux les moteurs des débris", "Elle augmente le dégagement au sol du fuselage"], a: 1 },
+            { q: "Pourquoi le dièdre positif est-il particulièrement courant sur les avions-écoles ?", o: ["Il rend l'avion plus rapide", "Il rend l'avion plus stable et 'pardonnant'", "Il réduit le coût de fabrication", "Il permet des acrobaties avancées"], a: 1 },
+            { q: "Quelle forme d'aile offre un faible allongement, de très bonnes performances et un décrochage réparti uniformément ?", o: ["L'aile droite", "L'aile delta", "L'aile elliptique", "L'aile trapézoïdale"], a: 3 },
+            { q: "L'aile volante est une conception dépourvue de :", o: ["Moteurs et train d'atterrissage", "Fuselage et empennage horizontal", "Longerons et nervures", "Bord d'attaque et bord de fuite"], a: 1 },
+            { q: "Quel est l'angle de flèche typique pour un vol en régime transsonique (Mach 0,72 à 0,90) ?", o: ["Nul à faible (<5°)", "25° à 35°", "35° à 45°", "Supérieur à 76°"], a: 1 },
+            { q: "Le Concorde utilisait une voilure optimisée pour le supersonique. Comment s'appelle cette forme d'aile spécifique (~76° au fuselage) ?", o: ["L'aile droite", "L'aile gothique", "L'aile elliptique", "L'aile à flèche inverse"], a: 1 },
+            { q: "Quelle configuration de voilure permet d'optimiser les performances à la fois à basse vitesse et à haute vitesse en vol, malgré une grande complexité mécanique ?", o: ["La géométrie variable", "L'aile volante", "L'aile droite simple", "Le dièdre négatif"], a: 0 },
+            { q: "L'empennage d'un avion regroupe généralement deux stabilisateurs. Lesquels ?", o: ["Longitudinal et transversal", "Horizontal (tangage) et vertical (lacet)", "Primaire et secondaire", "Positif et négatif"], a: 1 },
+            { q: "Quel est le principal défaut de l'empennage classique ?", o: ["Il est extrêmement lourd", "Il génère de la traînée et perturbe le flux d'air", "Il est trop fragile en vol subsonique", "Il limite le volume de la soute"], a: 1 },
+            { q: "Quel avantage aérodynamique justifie souvent l'utilisation d'un empennage en T ?", o: ["L'efficacité aérodynamique, notamment avec des moteurs à l'arrière", "Une structure plus légère et plus facile à entretenir", "La réduction du bruit en cabine", "L'élimination du besoin de gouvernes de direction"], a: 0 },
+            { q: "Quel type d'empennage est composé de deux plans inclinés remplaçant à la fois la dérive et le stabilisateur, parfois utilisé pour la furtivité ?", o: ["L'empennage multi-dérives", "L'empennage classique", "L'empennage en V (Papillon)", "L'empennage bipoutre"], a: 2 },
+            { q: "Pourquoi utiliserait-on un empennage multi-dérives sur certains multimoteurs ?", o: ["Pour réduire la taille de chaque dérive individuelle", "Pour réduire drastiquement la traînée globale", "Pour simplifier la fabrication en usine", "Pour améliorer le vol supersonique"], a: 0 },
+            { q: "Selon le document, quel pourcentage des entreprises de la grappe aérospatiale québécoise est concentré dans la grande région de Montréal ?", o: ["50%+", "75%+", "98%+", "100%"], a: 2 },
+            { q: "Combien d'entreprises et institutions la grappe québécoise regroupe-t-elle environ ?", o: ["50", "195", "400", "1000+"], a: 1 },
+            { q: "Au Québec, quelle proportion de travailleurs œuvrent dans l'industrie aérospatiale ?", o: ["1 sur 50", "1 sur 106", "1 sur 500", "1 sur 1000"], a: 1 },
+            { q: "Dans la grappe, des entreprises comme Airbus, Bombardier et Bell Textron sont considérées comme :", o: ["Des PME", "Des organismes de réglementation", "Des donneurs d'ordres / assembleurs", "Des centres de recherche"], a: 2 },
+            { q: "Des entités comme le CRIAQ, Polytechnique et l'ÉTS font partie de quel maillon de la grappe ?", o: ["Maintenance (MRO)", "Recherche et innovation", "Équipementiers", "Concertation"], a: 1 },
+            { q: "Transports Canada (TCCA) et le BST jouent quel rôle dans la grappe industrielle ?", o: ["Concertation", "Réglementation", "Assemblage final", "Formation de la main-d'œuvre"], a: 1 },
+            { q: "D'ici 10 ans, combien de postes à pourvoir sont estimés dans le secteur en raison de la pénurie de main-d'œuvre ?", o: ["10 000", "43 100", "65 000", "100 000"], a: 2 },
+            { q: "Lequel des éléments suivants est identifié comme un relais de croissance pour diversifier la grappe aérospatiale québécoise ?", o: ["L'aviation civile légère", "La diversification vers la défense", "La construction d'aéroports", "Les dirigeables commerciaux"], a: 1 },
+            { q: "Selon le code de conduite du TEA, concernant la certification du travail, que doit faire le technicien ?", o: ["Ne certifier que le travail réellement exécuté et vérifié par soi-même", "Certifier le travail de ses collègues non qualifiés pour les aider", "Certifier avant de faire le travail pour gagner du temps", "Laisser le superviseur certifier son propre travail"], a: 0 },
+            { q: "Dans le modèle SHELL, l'élément 'H' (Hardware) englobe :", o: ["Les manuels et procédures", "La réglementation", "L'outillage, l'équipement et l'aéronef", "Les communications en équipe"], a: 2 },
+            { q: "Dans le modèle SHELL, le bruit, le froid et l'éclairage font partie de quelle composante ?", o: ["Software (S)", "Liveware individuel (L)", "Environment (E)", "Hardware (H)"], a: 2 },
+            { q: "Dans le modèle SHELL, la fatigue, le stress et la motivation de la personne sont classés sous :", o: ["Software (S)", "Liveware (L)", "Environment (E)", "Hardware (H)"], a: 1 },
+            { q: "Qui a élaboré le concept des 12 facteurs humains (Dirty Dozen) pour Transports Canada en 1993 ?", o: ["Aéro Montréal", "Gordon Dupont", "Les frères Wright", "Le BST"], a: 1 },
+            { q: "Parmi les 12 facteurs humains, lesquels sont soulignés comme étant à surveiller de très près ?", o: ["Fatigue, Complaisance, Pression", "Distraction, Stress, Normes", "Manque de communication, Manque de ressources, Fatigue", "Manque de connaissances, Distraction, Normes"], a: 0 },
+            { q: "Comment définit-on un 'Danger' (hazard) en gestion des risques ?", o: ["La probabilité qu'un accident survienne", "Une condition ou situation ayant le potentiel de causer un dommage", "L'évaluation mathématique des conséquences", "Une blessure déjà survenue"], a: 1 },
+            { q: "L'énergie non maîtrisée et le choix inadéquat d'un extincteur sont des risques identifiés dans quel environnement ?", o: ["L'aire de trafic", "En vol", "En hangar", "Le mouvement au sol"], a: 2 },
+            { q: "Un feu impliquant du bois, du tissu ou du papier appartient à quelle classe ?", o: ["Classe A", "Classe B", "Classe C", "Classe D"], a: 0 },
+            { q: "Un feu impliquant des métaux inflammables (ex. magnésium) appartient à quelle classe ?", o: ["Classe A", "Classe B", "Classe C", "Classe D"], a: 3 },
+            { q: "Quel type d'agent extincteur est recommandé pour un feu de métaux inflammables (Classe D) ?", o: ["L'eau en jet direct", "Le CO2 (dioxyde de carbone)", "Une poudre spécialisée", "La mousse chimique"], a: 2 }
+        ];
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+
+        const questionEl = document.getElementById('question');
+        const optionsEl = document.getElementById('options');
+        const nextBtn = document.getElementById('next-btn');
+        const quizDiv = document.getElementById('quiz');
+        const resultsDiv = document.getElementById('results');
+        const scoreEl = document.getElementById('score');
+        const feedbackEl = document.getElementById('feedback-text');
+        const progressText = document.getElementById('progress-text');
+        const progressBar = document.getElementById('progress-bar');
+
+        function loadQuestion() {
+            nextBtn.style.display = 'none';
+            optionsEl.innerHTML = '';
+            
+            const currentQ = quizData[currentQuestionIndex];
+            
+            progressText.textContent = `Question ${currentQuestionIndex + 1} sur ${quizData.length}`;
+            progressBar.value = currentQuestionIndex + 1;
+            
+            questionEl.textContent = currentQ.q;
+
+            currentQ.o.forEach((option, index) => {
+                const button = document.createElement('button');
+                button.textContent = option;
+                button.addEventListener('click', () => selectAnswer(index, button));
+                optionsEl.appendChild(button);
+            });
+        }
+
+        function selectAnswer(selectedIndex, button) {
+            const currentQ = quizData[currentQuestionIndex];
+            const buttons = optionsEl.querySelectorAll('button');
+            
+            buttons.forEach(btn => btn.disabled = true);
+
+            if (selectedIndex === currentQ.a) {
+                button.classList.add('correct');
+                score++;
+            } else {
+                button.classList.add('wrong');
+                buttons[currentQ.a].classList.add('correct');
+            }
+
+            nextBtn.style.display = 'block';
+        }
+
+        nextBtn.addEventListener('click', () => {
+            currentQuestionIndex++;
+            if (currentQuestionIndex < quizData.length) {
+                loadQuestion();
+            } else {
+                showResults();
+            }
+        });
+
+        function showResults() {
+            quizDiv.classList.add('hidden');
+            resultsDiv.classList.remove('hidden');
+            scoreEl.textContent = score;
+            
+            const percentage = (score / quizData.length) * 100;
+            if (percentage >= 90) {
+                feedbackEl.textContent = "Excellent ! Vous maîtrisez parfaitement l'introduction à l'aéronautique.";
+            } else if (percentage >= 70) {
+                feedbackEl.textContent = "Très bon travail ! Vous avez une base solide.";
+            } else if (percentage >= 50) {
+                feedbackEl.textContent = "Bon effort, mais une révision supplémentaire des concepts de structure et facteurs humains serait utile.";
+            } else {
+                feedbackEl.textContent = "Il est recommandé de relire attentivement la présentation avant l'examen.";
+            }
+        }
+
+        loadQuestion();
+    </script>
+</body>
+</html>
