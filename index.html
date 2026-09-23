@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quiz de Révision - 90 Questions</title>
+    <title>Quiz de Révision - 120 Questions</title>
     <style>
         body { 
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; 
@@ -138,8 +138,8 @@
         
         <div id="quiz">
             <div class="progress-container">
-                <div class="progress-text" id="progress-text">Question 1 sur 90</div>
-                <progress id="progress-bar" value="1" max="90"></progress>
+                <div class="progress-text" id="progress-text">Question 1 sur 120</div>
+                <progress id="progress-bar" value="1" max="120"></progress>
             </div>
             <div class="question" id="question">Chargement...</div>
             <div class="options" id="options"></div>
@@ -148,7 +148,7 @@
 
         <div class="results hidden" id="results">
             <h2>Résultats de la révision</h2>
-            <div class="score-display"><span id="score">0</span> / 90</div>
+            <div class="score-display"><span id="score">0</span> / 120</div>
             <div class="feedback" id="feedback-text"></div>
             <button id="restart-btn" onclick="location.reload()">Recommencer le quiz</button>
         </div>
@@ -174,7 +174,7 @@
             { q: "Quel est le principe fondamental de la 'culture juste' en aéronautique face à une erreur involontaire ?", o: ["Elle doit être signalée et analysée pour améliorer le système", "Elle entraîne un congédiement immédiat", "Elle est gardée secrète pour protéger l'employé", "Elle est punie par une amende"], a: 0 },
             { q: "Comment calcule-t-on le 'risque' dans le domaine de la sécurité aérospatiale ?", o: ["Risque = Gravité / Probabilité", "Risque = Danger x Temps d'exposition", "Risque = Probabilité x Gravité", "Risque = Fatigue x Pression"], a: 2 },
             { q: "Sur l'aire de trafic, la présence de 'wingwalkers' est une mesure d'atténuation principalement pour quel danger ?", o: ["L'incendie de carburant", "Le mouvement au sol et les rayons de virage", "L'ingestion de débris (FOD)", "Le bruit extrême"], a: 1 },
-            { q: "La présence d'un rotor de queue invisible lors de sa rotation est un danger caractéristique de quel environnement de travail ?", o: ["Le hangar de maintenance", "L'aire de trafic", "L'intérieur de la cabine", "Le simulateur de vol"], a: 1 },
+            { q: "La présence d'un rotor de queue invisible lors de sa rotation est un danger caractéristique de quel environnement ?", o: ["Le hangar de maintenance", "L'aire de trafic", "Le mouvement au sol", "La cabine passagers"], a: 2 },
             { q: "Quel agent extincteur est formellement déconseillé pour éteindre un feu de Classe B (liquides inflammables) ?", o: ["La mousse", "Le CO2", "L'eau", "La poudre chimique"], a: 2 },
             { q: "Dans l'acronyme P.A.S.S. utilisé pour l'utilisation des extincteurs, que signifie le premier 'P' ?", o: ["Pointer (Pointer la buse)", "Pull (Dégoupiller la tige)", "Push (Pousser le levier)", "Press (Pressuriser l'agent)"], a: 1 },
             { q: "Un feu impliquant des graisses de cuisson dans une cuisine d'aéroport est classé de quel type ?", o: ["Classe A", "Classe B", "Classe C", "Classe K"], a: 3 },
@@ -245,10 +245,39 @@
             { q: "L'énergie non maîtrisée et le choix inadéquat d'un extincteur sont des risques identifiés dans quel environnement ?", o: ["L'aire de trafic", "En vol", "En hangar", "Le mouvement au sol"], a: 2 },
             { q: "Un feu impliquant du bois, du tissu ou du papier appartient à quelle classe ?", o: ["Classe A", "Classe B", "Classe C", "Classe D"], a: 0 },
             { q: "Un feu impliquant des métaux inflammables (ex. magnésium) appartient à quelle classe ?", o: ["Classe A", "Classe B", "Classe C", "Classe D"], a: 3 },
-            { q: "Quel type d'agent extincteur est recommandé pour un feu de métaux inflammables (Classe D) ?", o: ["L'eau en jet direct", "Le CO2 (dioxyde de carbone)", "Une poudre spécialisée", "La mousse chimique"], a: 2 }
+            { q: "Quel type d'agent extincteur est recommandé pour un feu de métaux inflammables (Classe D) ?", o: ["L'eau en jet direct", "Le CO2 (dioxyde de carbone)", "Une poudre spécialisée", "La mousse chimique"], a: 2 },
+            { q: "Quelles sont les dimensions de référence d'un aéronef mentionnées dans la terminologie ?", o: ["Envergure, longueur, hauteur", "Surface, volume, masse", "Corde, flèche, dièdre", "Poussée, traînée, portance"], a: 0 },
+            { q: "Comment appelle-t-on la surface inférieure, généralement plus plane, d'un profil d'aile ?", o: ["L'intrados", "L'extrados", "La corde", "Le longeron"], a: 0 },
+            { q: "Comment est généralement assemblée la structure tubulaire d'un fuselage en treillis ?", o: ["Soudée ou boulonnée", "Collée avec des résines", "Rivetée sous vide", "Moulée d'une seule pièce"], a: 0 },
+            { q: "Quels matériaux sont caractéristiques de la construction de fuselages monocoques selon le cours ?", o: ["Fibres synthétiques, verre ou carbone", "Tubes d'acier et toile", "Alliages de titane et bois", "Aluminium alvéolé massif"], a: 0 },
+            { q: "Quels sont les matériaux principalement utilisés pour un fuselage semi-monocoque ?", o: ["Aluminium, composites, titane", "Bois et toile", "Tubes d'acier soudés", "Uniquement de la fibre de verre"], a: 0 },
+            { q: "Dans un fuselage semi-monocoque, quel est l'espacement régulier typique des cadres (frames) ?", o: ["20 à 50 cm", "1 à 2 mètres", "5 à 10 cm", "Plus de 3 mètres"], a: 0 },
+            { q: "Outre la fonction de revêtement travaillant, quelle est l'autre utilité structurale fréquente du revêtement (skin) de la voilure ?", o: ["Servir de réservoir de carburant", "Loger le train d'atterrissage principal", "Agir comme gouverne de direction", "Remplacer les longerons"], a: 0 },
+            { q: "Quel est l'un des principaux avantages de la voilure basse concernant l'entretien de l'aéronef ?", o: ["Elle offre une bonne accessibilité", "Elle protège les moteurs des débris au sol", "Elle élimine le besoin d'un système hydraulique", "Elle réduit l'encombrement interne du fuselage"], a: 0 },
+            { q: "Quel est le compromis à retenir concernant l'utilisation d'un dièdre positif ?", o: ["Il réduit la maniabilité en roulis", "Il rend l'avion beaucoup plus lourd", "Il empêche le vol subsonique", "Il augmente les risques d'incendie"], a: 0 },
+            { q: "Quelle caractéristique définit une forme d'aile 'droite' ?", o: ["Un angle de 90° avec l'axe du fuselage", "Une flèche inversée de 15°", "Une forme parfaitement circulaire", "L'absence de longerons"], a: 0 },
+            { q: "Quel est l'effet négatif d'une aile avec un angle de flèche positive prononcé ?", o: ["Des performances médiocres à basse vitesse", "L'incapacité à voler en régime supersonique", "Une maniabilité excessive en lacet", "Un décrochage retardé"], a: 0 },
+            { q: "L'aile volante, bien qu'efficace aérodynamiquement, présente des défis de stabilité sur quels axes ?", o: ["Le tangage et le lacet", "Le roulis et la translation", "La compression et la flexion", "Uniquement sur l'axe longitudinal"], a: 0 },
+            { q: "Sur une aile delta avec canard, à quoi peut servir le plan canard à l'avant ?", o: ["Ajouter de la portance et servir de gouverne de profondeur", "Servir exclusivement d'antenne radar", "Diminuer le dièdre effectif", "Stocker du carburant supplémentaire"], a: 0 },
+            { q: "Quelle configuration d'empennage a souvent son poids situé en hauteur, rendant la maintenance plus difficile ?", o: ["L'empennage en T", "L'empennage bipoutre", "L'empennage classique", "L'empennage en papillon"], a: 0 },
+            { q: "Quel type d'empennage ne possède pas d'angle droit, ce qui peut favoriser la furtivité ?", o: ["Papillon / V", "Bipoutre", "Multi-dérives", "Classique"], a: 0 },
+            { q: "Combien compte-t-on de PME manufacturières au sein de la grappe aérospatiale québécoise ?", o: ["Plus de 215", "Environ 50", "Exactement 195", "Près de 1000"], a: 0 },
+            { q: "En quelle année Aéro Montréal a-t-il été fondé ?", o: ["2006", "1993", "2024", "1985"], a: 0 },
+            { q: "Combien de membres Aéro Montréal réunit-il aujourd'hui ?", o: ["Plus de 300 membres", "Moins de 50 membres", "195 membres exacts", "43 100 membres"], a: 0 },
+            { q: "Quel enjeu actuel expose l'industrie aérospatiale aux tensions commerciales internationales ?", o: ["La chaîne d'approvisionnement mondiale", "La décarbonation", "La diversification vers la défense", "La pénurie de main-d'œuvre"], a: 0 },
+            { q: "Quel délai est estimé pour pourvoir les 65 000 postes nécessaires en raison de la pénurie de main-d'œuvre ?", o: ["D'ici 10 ans", "L'année prochaine", "D'ici 25 ans", "Dans les 6 prochains mois"], a: 0 },
+            { q: "Concernant les transferts de quart de travail, quelle attitude est attendue d'un TEA ?", o: ["Une communication claire", "Un transfert de toutes les responsabilités écrites uniquement", "L'absence de supervision", "La suppression des fiches de maintenance"], a: 0 },
+            { q: "Comment le code de conduite perçoit-il la vérification de son propre travail par un autre collègue (vérification par les pairs) ?", o: ["C'est une attitude attendue et il faut l'accepter (Esprit d'équipe)", "C'est une insulte à l'intégrité du technicien", "C'est interdit par Transports Canada", "C'est réservé aux techniciens stagiaires"], a: 0 },
+            { q: "Pour quel organisme gouvernemental Gordon Dupont a-t-il élaboré le concept des 'Dirty Dozen' (12 facteurs humains) ?", o: ["Transport Canada", "Aéro Montréal", "La FAA", "L'EASA"], a: 0 },
+            { q: "Quel facteur humain parmi les suivants réduit à la fois la concentration et le jugement selon le cours ?", o: ["La fatigue", "La complaisance", "Les normes", "Le manque de ressources"], a: 0 },
+            { q: "Le soudage et les choix d'extincteurs sont des risques spécifiquement identifiés pour quel environnement de travail ?", o: ["En hangar", "Sur l'aire de trafic", "Durant le mouvement au sol", "En plein vol"], a: 0 },
+            { q: "Le risque associé aux vents de travers est typiquement répertorié dans quel environnement d'opérations ?", o: ["L'aire de trafic", "L'intérieur du hangar", "L'atelier d'usinage", "La cabine passagers"], a: 0 },
+            { q: "Par quel mécanisme principal l'eau éteint-elle un feu de Classe A ?", o: ["Elle refroidit le combustible", "Elle étouffe l'oxygène", "Elle saponifie les graisses", "Elle crée une réaction chimique non conductrice"], a: 0 },
+            { q: "Par quel processus un extincteur chimique humide éteint-il un feu de graisses de cuisson (Classe K) ?", o: ["La saponification", "L'étouffement par dioxyde de carbone", "La congélation cryogénique", "L'explosion contrôlée de la flamme"], a: 0 },
+            { q: "Dans la méthode P.A.S.S., que signifie le 'A' (Aim) ?", o: ["Viser la base du feu", "Attendre l'aide des pompiers", "Avancer vers les flammes", "Activer l'alarme incendie"], a: 0 },
+            { q: "Dans le modèle SHELL, l'interface Liveware-Hardware concerne notamment :", o: ["La conception et l'accès à un panneau de l'aéronef", "Les communications radio avec la tour", "La température et l'éclairage de l'atelier", "L'interprétation de la réglementation"], a: 0 }
         ];
 
-        // --- NOUVELLE FONCTION AJOUTÉE ICI ---
         // Algorithme de Fisher-Yates pour mélanger l'ordre des questions de façon aléatoire
         function shuffleArray(array) {
             for (let i = array.length - 1; i > 0; i--) {
@@ -257,9 +286,8 @@
             }
         }
         
-        // On mélange les questions avant de lancer le quiz
+        // Mélange les questions avant de lancer le quiz
         shuffleArray(quizData);
-        // -------------------------------------
 
         let currentQuestionIndex = 0;
         let score = 0;
