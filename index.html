@@ -248,6 +248,19 @@
             { q: "Quel type d'agent extincteur est recommandé pour un feu de métaux inflammables (Classe D) ?", o: ["L'eau en jet direct", "Le CO2 (dioxyde de carbone)", "Une poudre spécialisée", "La mousse chimique"], a: 2 }
         ];
 
+        // --- NOUVELLE FONCTION AJOUTÉE ICI ---
+        // Algorithme de Fisher-Yates pour mélanger l'ordre des questions de façon aléatoire
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+        
+        // On mélange les questions avant de lancer le quiz
+        shuffleArray(quizData);
+        // -------------------------------------
+
         let currentQuestionIndex = 0;
         let score = 0;
 
